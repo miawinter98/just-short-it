@@ -2,13 +2,16 @@
 
 The most KISS single user URL shortener there is.
 
+![](https://img.shields.io/github/license/miawinter98/just-short-it?color=green)
+![](https://img.shields.io/docker/pulls/miawinter/just-short-it?color=informational)
+![](https://img.shields.io/docker/stars/miawinter/just-short-it?color=yellow)
 
 ## To simply run Just Short It in a container run:
 ```
 docker run -e JSI_BaseUrl=<your-url> \
            -e JSI_Account__Username=<your-username> \
            -e JSI_Account__Password=<your-password> \
-           <todo>
+           miawinter/just-short-it:latest
 ```
 
 
@@ -19,7 +22,7 @@ version: '3.4'
 services:
   just-short-it:
     container_name: JustShortIt
-    image: <todo>
+    image: miawinter/just-short-it:latest
     environment:
       - "JSI_BaseUrl=<your-url>"
       - "JSI_Account__Username=<your-username>"
@@ -42,12 +45,14 @@ version: '3.4'
 services:
   just-short-it:
     container_name: JustShortIt
-    image: <todo>
+    image: miawinter/just-short-it:latest
     environment:
       - "JSI_BaseUrl=<your-url>"
       - "JSI_Account__Username=<your-username>"
       - "JSI_Account__Password=<your-password>"
       - "JSI_Redis__ConnectionString=redis,password=<your-redis-password>"
+    depends_on:
+      - redis
   redis:
     container_name: Redis
     image: redis:alpine
