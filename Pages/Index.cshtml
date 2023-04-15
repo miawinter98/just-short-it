@@ -1,0 +1,15 @@
+﻿@page "{Id?}"
+@model IndexModel
+@{
+    ViewData["Title"] = "Startpage";
+}
+
+<div class="has-text-centered my-6 px-4">
+    @if (Model.Id is null) {
+        <h1 class="title is-1 is-spaced">Welcome to Just Short It!</h1>
+        <h2 class="subtitle is-2">The KISS single-user URL shortener!</h2>
+        <a class="button is-primary is-medium" asp-page="Urls">Start shorting URLs</a>
+    } else {
+        <p class="has-text-danger">@Model.ErrorMessage</p>
+    }
+</div>

@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - JustShortIt</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
+</head>
+<body>
+    <nav class="navbar is-primary has-shadow" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="https://github.com/miawinter98/just-short-it" target="_blank">Just Short It!</a>
+        </div>
+        <div class="navbar-menu">
+
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <partial name="_LoginPartial"/>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        @RenderBody()
+    </main>
+
+    <footer class="footer">
+        <div class="has-text-centered">
+            <p>
+                <a href="https://github.com/miawinter98/just-short-it" target="_blank">Just Short it!</a> 
+                by <a href="https://miawinter.de/" target="_blank">Mia Winter</a>.
+                Styled with <a href="https://bulma.io" target="_blank">Bulma</a>.
+            </p>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
