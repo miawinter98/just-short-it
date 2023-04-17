@@ -22,7 +22,11 @@ public class UrlsModel : PageModel {
     public UrlsModel(IConfiguration configuration, IDistributedCache db) {
         // TODO display error on page instead
         BaseUrl = configuration.GetValue<string>("BaseUrl") ?? throw new ApplicationException("BaseUrl not set");
+#if DEBUG
+	    BaseUrl = "https://localhost/";
+#else 
         BaseUrl = new Uri(BaseUrl, UriKind.Absolute).ToString();
+#endif
         Db = db;
     }
 

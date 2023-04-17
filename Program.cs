@@ -11,10 +11,17 @@ var redisConnection = builder.Configuration.GetSection("Redis").Get<RedisConnect
 var user = builder.Configuration.GetSection("Account").Get<User>();
 string? baseUrl = builder.Configuration.GetValue<string>("BaseUrl");
 
+#if DEBUG
+baseUrl = "http://localhost/";
+user = new User("test", "test");
+Console.Error.WriteLine("YOU ARE RUNNING A DEBUG BUILD WITH TEST CREDENTIALS, " +
+                        "DO NOT UNDER ANY CIRCUMSTANCES RUN THIS IN PRODUCTION, YOU HAVE BEEN WARNED.");
+#endif
+
 // Check if everything is configured (right)
 if (string.IsNullOrEmpty(baseUrl) || Uri.IsWellFormedUriString(baseUrl, UriKind.Absolute) is false)
-    throw new ApplicationException(
-        "Base-URL is not set to a correct URL, please provide JSI_BaseUrl with a valid url.");
+	throw new ApplicationException(
+		"Base-URL is not set to a correct URL, please provide JSI_BaseUrl with a valid url.");
 if (user is null || string.IsNullOrEmpty(user.Username) || string.IsNullOrEmpty(user.Password)) 
     throw new ApplicationException(
         "Credentials not set, please provide JSI_Account__Username and JSI_Account__Password.");
