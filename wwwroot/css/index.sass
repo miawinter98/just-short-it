@@ -3,10 +3,41 @@ $radius-small: 0px
 $radius: 0px
 $radius-large: 0px
 
+/**/
+$primary:         hsl(257, 45%, 36%)
+$secondary:       hsl(140, 70%, 40%)
+$secondary-light: hsl(140, 70%, 50%)
+$secondary-dark:  hsl(140, 70%, 20%)
 
+$weight-light: 600
+$weight-normal: 600
+$weight-medium: 600
+$weight-semibold: 800
+$weight-bold: 800
 
+$link: $secondary
+$link-hover: $secondary-dark
 
+$scheme-main: hsl(0, 0%, 8%)
+$scheme-main-bis: hsl(0, 0%, 4%)
+$scheme-main-ter: hsl(0, 0%, 0%)
 
+$text: $secondary
+$text-light: $secondary-light
+$text-strong: $secondary-light
+
+/* bulma generates the colors, so we have to overwrite them */
+a.button.is-primary,
+button.button.is-primary
+	color: $text-strong !important
+
+nav.navbar.is-primary
+	box-shadow: none !important
+	.navbar-item
+		color: $text-strong !important
+
+root, html, body 
+	letter-spacing: 0.05rem
 
 /* TODO check what we need here and ditch the rest */
 /* don't judge me */ 
