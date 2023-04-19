@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Text.RegularExpressions;
 using System.Web;
+using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Caching.Distributed;
 
 namespace JustShortIt.Pages; 
@@ -27,8 +28,21 @@ public class UrlsModel : PageModel {
 #endif
         Db = db;
     }
-
     
+    public async Task<IActionResult> OnPostInspectAsync() {
+        string? id = Request.Form["Inspect_Id"];
+        if (id is null || string.IsNullOrEmpty(id)) {
+            ModelState.AddModelError("Inspect_Id", "ID is a required field");
+            return Page();
+        }
+
+        if (await Db.GetAsync(id) is null) {
+            ModelState.AddModelError("Inspect_Id", "ID does not exist");
+            return Page();
+        }
+
+        return RedirectToPage("Inspect", new { Id = id });
+    }
 
     public async Task<IActionResult> OnPostAsync() {
         if (!ModelState.IsValid) return Page();

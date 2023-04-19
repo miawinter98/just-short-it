@@ -15,49 +15,71 @@
     <div class="column is-full has-text-centered">
         <h1 class="title is-2">Urls Administration</h1>
     </div>
+    
+    <div class="column is-half-desktop is-two-thirds-tablet is-full-mobile">
+        <form class="mb-6" method="post" asp-page="Urls" asp-page-handler="Inspect">
+            <h2 class="title is-3">Inspect URL</h2>
 
-    <form class="column is-half-desktop is-two-thirds-tablet is-full-mobile" method="post">
-        <h2 class="title is-3">New URL</h2>
-
-        <div class="field">
-            <label class="label" asp-for="Model!.Id">ID</label>
-            <div class="control">
-                <input required class="input" type="text" asp-for="Model!.Id" />
-            </div>
-            <span class="help is-danger" asp-validation-for="Model!.Id"></span>
-        </div>
-
-        <div class="field">
-            <label class="label" asp-for="Model!.Target">Target</label>
-            <div class="control">
-                <input required class="input" type="text" asp-for="Model!.Target" />
-            </div>
-            <span class="help is-danger" asp-validation-for="Model!.Target"></span>
-        </div>
-        
-        <div class="field">
-            <label class="label" asp-for="Model!.ExpirationDate">Expiration</label>
-            <div class="control">
-                <div class="select">
-                    @Html.DropDownListFor(m => m.Model!.ExpirationDate, new List<SelectListItem> {
-                        new("1 Day", DateTime.UtcNow.AddDays(1).ToBinary().ToString()),
-                        new("1 Week", DateTime.UtcNow.AddDays(7).ToBinary().ToString()),
-                        new("4 Weeks", DateTime.UtcNow.AddDays(4 * 7).ToBinary().ToString()),
-                        new("1 Year", DateTime.UtcNow.AddYears(1).ToBinary().ToString()),
-                        new("Never", DateTime.UtcNow.AddYears(1000).ToBinary().ToString())
-                    }, "Select Expiration")
+            <div class="field has-addons">
+                <div class="control">
+                    <label class="button is-static">ID</label>
+                </div>
+                <div class="control is-expanded">
+                    <input required type="text" class="input" name="Inspect_Id"/>
+                </div>
+                <div class="control">
+                    <button class="button is-primary" type="submit">Inspect</button>
                 </div>
             </div>
-            <span class="help is-danger" asp-validation-for="Model!.ExpirationDate"></span>
-        </div>
-
-        <div class="has-text-danger" asp-validation-summary="ModelOnly"></div>
-
-        <div class="field is-grouped is-grouped-right">
-            <div class="control">
-                <button class="button is-primary" type="submit">Create</button>
+            
+            <div class="field">
+                <span class="help is-danger">@ModelState["Inspect_Id"]?.Errors.FirstOrDefault()?.ErrorMessage</span>
             </div>
-        </div>
-    </form>
+        </form>
+
+        <form method="post">
+            <h2 class="title is-3">New URL</h2>
+
+            <div class="field">
+                <label class="label" asp-for="Model!.Id">ID</label>
+                <div class="control">
+                    <input required class="input" type="text" asp-for="Model!.Id" />
+                </div>
+                <span class="help is-danger" asp-validation-for="Model!.Id"></span>
+            </div>
+
+            <div class="field">
+                <label class="label" asp-for="Model!.Target">Target</label>
+                <div class="control">
+                    <input required class="input" type="text" asp-for="Model!.Target" />
+                </div>
+                <span class="help is-danger" asp-validation-for="Model!.Target"></span>
+            </div>
+        
+            <div class="field">
+                <label class="label" asp-for="Model!.ExpirationDate">Expiration</label>
+                <div class="control">
+                    <div class="select">
+                        @Html.DropDownListFor(m => m.Model!.ExpirationDate, new List<SelectListItem> {
+                            new("1 Day", DateTime.UtcNow.AddDays(1).ToBinary().ToString()),
+                            new("1 Week", DateTime.UtcNow.AddDays(7).ToBinary().ToString()),
+                            new("4 Weeks", DateTime.UtcNow.AddDays(4 * 7).ToBinary().ToString()),
+                            new("1 Year", DateTime.UtcNow.AddYears(1).ToBinary().ToString()),
+                            new("Never", DateTime.UtcNow.AddYears(1000).ToBinary().ToString())
+                        }, "Select Expiration")
+                    </div>
+                </div>
+                <span class="help is-danger" asp-validation-for="Model!.ExpirationDate"></span>
+            </div>
+
+            <div class="has-text-danger" asp-validation-summary="ModelOnly"></div>
+
+            <div class="field is-grouped is-grouped-right">
+                <div class="control">
+                    <button class="button is-primary" type="submit">Create</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 
