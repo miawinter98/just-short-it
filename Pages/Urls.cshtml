@@ -1,7 +1,9 @@
 ﻿@page
 @using System.Globalization
 @model JustShortIt.Pages.UrlsModel
-
+@{
+    ViewData["Title"] = "Urls";
+}
 
 <div class="columns is-centered is-multiline my-6 px-4">
     @if (!string.IsNullOrEmpty(Model.Message)) {
