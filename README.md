@@ -3,8 +3,14 @@
 The most KISS single user URL shortener there is.
 
 ![](https://img.shields.io/github/license/miawinter98/just-short-it?color=green)
-![](https://img.shields.io/docker/pulls/miawinter/just-short-it?color=informational)
-![](https://img.shields.io/docker/stars/miawinter/just-short-it?color=yellow)
+![](https://img.shields.io/github/forks/miawinter98/just-short-it?label=gitgub%20forks&logo=github)
+![](https://img.shields.io/github/stars/miawinter98/just-short-it?label=github%20stars&color=yellow&logo=github)
+
+![](https://img.shields.io/docker/pulls/miawinter/just-short-it?color=informational&logo=docker)
+![](https://img.shields.io/docker/stars/miawinter/just-short-it?color=yellow&logo=docker)
+
+![](https://img.shields.io/docker/v/miawinter/just-short-it/latest?logo=docker&label=)
+![](https://img.shields.io/docker/v/miawinter/just-short-it/latest-alpine?logo=docker&label=)
 
 ## To simply run Just Short It in a container run:
 ```
