@@ -24,7 +24,8 @@ public class UrlsModel : PageModel {
 #if DEBUG
 	    BaseUrl = "https://localhost/";
 #else 
-        BaseUrl = new Uri(BaseUrl, UriKind.Absolute).ToString();
+        string url = configuration.GetValue<string>("BaseUrl") ?? throw new ApplicationException("BaseUrl not set");
+        BaseUrl = new Uri(url, UriKind.Absolute).ToString();
 #endif
         Db = db;
     }
