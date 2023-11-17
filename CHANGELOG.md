@@ -14,6 +14,7 @@
 
 - Migrated project to .NET 8
 - Container now uses Port 8080
+- Input fields now have autocomplete attributes that improve browser behavior
 
 ## [1.1.0] - 2023-04-17
 

@@ -11,14 +11,14 @@
         <div class="field">
             <label class="label" asp-for="UserModel!.Username">Username</label>
             <div class="control">
-                <input required class="input" type="text" asp-for="UserModel!.Username"/>
+                <input required class="input" type="text" asp-for="UserModel!.Username" autocomplete="username" />
             </div>
             <span class="help is-danger" asp-validation-for="UserModel!.Username"></span>
         </div>
         <div class="field">
             <label class="label" asp-for="UserModel!.Password">Password</label>
             <div class="control">
-                <input required class="input" type="password" asp-for="UserModel!.Password"/>
+                <input required class="input" type="password" asp-for="UserModel!.Password" autocomplete="current-password" />
             </div>
             <span class="help is-danger" asp-validation-for="UserModel!.Password"></span>
         </div>

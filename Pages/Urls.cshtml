@@ -25,7 +25,7 @@
                     <label class="button is-static">ID</label>
                 </div>
                 <div class="control is-expanded">
-                    <input required type="text" class="input" name="Inspect_Id"/>
+                    <input required type="text" class="input" name="Inspect_Id" autocomplete="off" />
                 </div>
                 <div class="control">
                     <button class="button is-primary" type="submit">Inspect</button>
@@ -43,7 +43,7 @@
             <div class="field">
                 <label class="label" asp-for="Model!.Id">ID</label>
                 <div class="control">
-                    <input required class="input" type="text" asp-for="Model!.Id" />
+                    <input required class="input" type="text" asp-for="Model!.Id" autocomplete="off" />
                 </div>
                 <span class="help is-danger" asp-validation-for="Model!.Id"></span>
             </div>
@@ -51,7 +51,7 @@
             <div class="field">
                 <label class="label" asp-for="Model!.Target">Target</label>
                 <div class="control">
-                    <input required class="input" type="text" asp-for="Model!.Target" />
+                    <input required class="input" type="url" asp-for="Model!.Target" autocomplete="off" />
                 </div>
                 <span class="help is-danger" asp-validation-for="Model!.Target"></span>
             </div>
