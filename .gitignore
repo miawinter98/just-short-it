@@ -710,3 +710,4 @@ FodyWeavers.xsd
 # we generate these
 wwwroot/css/index.css
 wwwroot/css/index.min.css
+/wwwroot/css/main.min.css
