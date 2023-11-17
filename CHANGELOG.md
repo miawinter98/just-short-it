@@ -8,6 +8,11 @@
 - Added Inspect Page, which displays information about a URL and allows to delete it
 - Added Inspect Form group to Urls that redirects to Inspect Page
 
+## Changed
+
+- Migrated project to .NET 8
+- Container now uses Port 8080
+
 ## [1.1.0] - 2023-04-17
 
 ### Changed
