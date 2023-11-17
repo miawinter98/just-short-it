@@ -92,6 +92,7 @@ services:
       - "JSI_Redis__ConnectionString=redis,password=<your-redis-password>"
     environment:
       - "VIRTUAL_HOST=<your-url>"
+      - "VIRTUAL_PORT=8080"
       - "LETSENCRYPT_HOST=<your-url>"
     depends_on:
       - redis
