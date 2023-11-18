@@ -2,10 +2,12 @@
 
 @using JustShortIt.Components.Partials
 
-<HeaderPartial />
+<div class="flex flex-col min-h-screen">
+    <HeaderPartial />
 
-<main class="flex-1 container mx-auto px-8 py-8 grid">
-    @Body
-</main>
+    <main class="flex-1 container mx-auto px-8 py-8 grid">
+        @Body
+    </main>
 
-<FooterPartial />
+    <FooterPartial />
+</div>
