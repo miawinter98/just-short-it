@@ -1,6 +1,6 @@
 # Changelog
 
-## [unreleased]
+## [1.3.0] - 2023-11-18
 
 ### Added
 - new css style, created using tailwindcss and daisyui
