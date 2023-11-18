@@ -1,0 +1,19 @@
+﻿@page "/logout"
+@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Authentication.Cookies
+
+@inject IHttpContextAccessor HttpContextAccessor;
+@inject NavigationManager Navigation;
+
+<PageTitle>Logout - Just Short It</PageTitle>
+
+<p class="text-xl text-error">How did you get here?</p>
+
+@code {
+    protected override async Task OnInitializedAsync() {
+        var context = HttpContextAccessor.HttpContext;
+        if (context is null) throw new ArgumentException("HttpContext");
+        await context.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        Navigation.NavigateTo("/", true);
+    }
+}
