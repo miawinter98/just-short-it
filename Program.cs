@@ -2,6 +2,8 @@ using JustShortIt.Components;
 using JustShortIt.Model;
 using JustShortIt.Service;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Server;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddEnvironmentVariables("JSI_");
@@ -43,7 +45,7 @@ if (string.IsNullOrEmpty(redisConnection?.ConnectionString) is false) {
 }
 
 // Add Authentication
-builder.Services.AddSingleton(_ => new AuthenticationService(user));
+builder.Services.AddScoped(_ => new AuthenticationService(user));
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => {
     options.ExpireTimeSpan = TimeSpan.FromHours(24);
     options.SlidingExpiration = true;
@@ -51,6 +53,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     options.LoginPath = "/Login";
     options.LogoutPath = "/Logout";
 });
+builder.Services.AddScoped<AuthenticationStateProvider, ServerAuthenticationStateProvider>();
+builder.Services.AddCascadingAuthenticationState();
 
 var app = builder.Build();
 

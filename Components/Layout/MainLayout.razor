@@ -1,3 +1,11 @@
 ﻿@inherits LayoutComponentBase
 
-@Body
+@using JustShortIt.Components.Partials
+
+<HeaderPartial />
+
+<main class="flex-1 container mx-auto px-8 py-8 grid">
+    @Body
+</main>
+
+<FooterPartial />
