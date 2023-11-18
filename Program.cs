@@ -1,3 +1,4 @@
+using JustShortIt.Components;
 using JustShortIt.Model;
 using JustShortIt.Service;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -5,6 +6,9 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddEnvironmentVariables("JSI_");
 builder.Services.AddRazorPages();
+
+builder.Services.AddAntiforgery();
+builder.Services.AddRazorComponents();
 
 // Get Configurations
 var redisConnection = builder.Configuration.GetSection("Redis").Get<RedisConnection>();
@@ -65,5 +69,7 @@ if (!app.Environment.IsDevelopment()) {
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
+app.UseAntiforgery();
 app.MapRazorPages();
+app.MapRazorComponents<App>();
 app.Run();
