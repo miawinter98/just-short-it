@@ -7,7 +7,7 @@
 - new favicon (replacing the default asp.net one)
 - about page (linked in footer)
 
-# Changed 
+### Changed 
 - migrated app to use blazor static site rendering for all pages
 
 ### Removed
