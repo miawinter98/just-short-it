@@ -1,7 +1,6 @@
 {
   "dependencies": {
     "autoprefixer": "^10.4.16",
-    "bulma": "^0.9.4",
     "cssnano": "^6.0.1",
     "daisyui": "^4.4.0",
     "postcss": "^8.4.31",
