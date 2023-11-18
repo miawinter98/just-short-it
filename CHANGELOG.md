@@ -4,6 +4,7 @@
 
 ### Added
 - new css style, created using tailwindcss and daisyui
+- new favicon (replacing the default asp.net one)
 
 ### Fixed
 - form submit bug on Urls page, that happens when one first tries to look up an ID unsuccessfully, and then tries to create a new redirect
