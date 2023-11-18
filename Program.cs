@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Components.Server;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddEnvironmentVariables("JSI_");
-builder.Services.AddRazorPages();
 
 builder.Services.AddAntiforgery();
 builder.Services.AddRazorComponents();
@@ -53,6 +52,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     options.LoginPath = "/Login";
     options.LogoutPath = "/Logout";
 });
+builder.Services.AddAuthorization();
 builder.Services.AddScoped<AuthenticationStateProvider, ServerAuthenticationStateProvider>();
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddHttpContextAccessor();
@@ -72,9 +72,7 @@ if (!app.Environment.IsDevelopment()) {
 
 
 app.UseStaticFiles();
-app.UseRouting();
 app.UseAuthorization();
 app.UseAntiforgery();
-app.MapRazorPages();
 app.MapRazorComponents<App>();
 app.Run();
