@@ -11,13 +11,13 @@
 <div class="grid place-items-center h-full">
     <section class="w-full md:max-w-lg flex flex-col gap-4">
         @if (Model is null) {
+            <MessageComponent Message="@Message" Type="Type" />
             <h1 class="text-3xl lg:text-5xl text-error text-center mb-6">
                 URL not found
             </h1>
             <h2 class="text-2xl lg:text-4xl text-secondary-content text-center mb-3">
                 The given ID does not exist, it may have expired or been deleted.
             </h2>
-            <MessageComponent Message="@Message" Type="Type" />
         } else {
             <h1 class="text-3xl lg:text-5xl text-primary-content text-center mb-6">Inspect</h1>
                 
@@ -68,10 +68,12 @@
         }
 
         await Db.RemoveAsync(Id);
-
+        
         Type = MessageComponent.AlertType.Success;
         Message = $"Id '{Id}' successfully deleted.";
-        return;
+        
+        Id = null;
+        Model = null;
     }
 
 }
