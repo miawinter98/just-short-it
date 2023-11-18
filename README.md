@@ -1,3 +1,5 @@
+<img src="wwwroot/img/jsi-logo.png" alt="" width="80" />
+
 # Just Short It (damnit)!
 
 The most KISS single user URL shortener there is.
@@ -165,12 +167,12 @@ volumes:
 
 Just Short It by [Mia Winter](https://miawinter.de/) is licensed under the [MIT License](https://en.wikipedia.org/wiki/MIT_License).  
 
-Just Short It uses [tailwindcss](https://tailwindcss.com/), licensed under the [MIT License](https://github.com/tailwindlabs/tailwindcss/blob/master/LICENSE)
-Just Short It uses [daisyUI](https://daisyui.com/), licensed under the [MIT License](https://github.com/saadeghi/daisyui/blob/master/LICENSE)
-Just Short It uses [PostCSS](https://postcss.org/), licensed under the [MIT License](https://github.com/postcss/postcss/blob/main/LICENSE)
-Just Short It uses [PostCSS CLI](https://github.com/postcss/postcss-cli/), licensed under the [MIT License](https://github.com/postcss/postcss-cli/blob/master/LICENSE)
-Just Short It uses [autoprefixer](https://github.com/postcss/autoprefixer/), licensed under the [MIT License](https://github.com/postcss/autoprefixer/blob/main/LICENSE)
-Just Short It uses [cssnano](https://cssnano.co/), licensed under the [MIT License](https://github.com/cssnano/cssnano/blob/master/LICENSE-MIT)
+Just Short It uses [tailwindcss](https://tailwindcss.com/), licensed under the [MIT License](https://github.com/tailwindlabs/tailwindcss/blob/master/LICENSE)  
+Just Short It uses [daisyUI](https://daisyui.com/), licensed under the [MIT License](https://github.com/saadeghi/daisyui/blob/master/LICENSE)  
+Just Short It uses [PostCSS](https://postcss.org/), licensed under the [MIT License](https://github.com/postcss/postcss/blob/main/LICENSE)  
+Just Short It uses [PostCSS CLI](https://github.com/postcss/postcss-cli/), licensed under the [MIT License](https://github.com/postcss/postcss-cli/blob/master/LICENSE)  
+Just Short It uses [autoprefixer](https://github.com/postcss/autoprefixer/), licensed under the [MIT License](https://github.com/postcss/autoprefixer/blob/main/LICENSE)  
+Just Short It uses [cssnano](https://cssnano.co/), licensed under the [MIT License](https://github.com/cssnano/cssnano/blob/master/LICENSE-MIT)  
 Just Short It uses [heroicons](https://heroicons.com/), licensed under the [MIT License](https://github.com/tailwindlabs/heroicons/blob/master/LICENSE)
 
 Copyright (c) 2023 Mia Winter
