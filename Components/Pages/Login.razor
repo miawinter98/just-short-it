@@ -1,0 +1,93 @@
+﻿@page "/login"
+@using System.ComponentModel.DataAnnotations
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Authentication.Cookies
+@using AuthenticationService = JustShortIt.Service.AuthenticationService
+
+@inject AuthenticationService Authentication
+@inject IHttpContextAccessor HttpContextAccessor
+@inject NavigationManager Navigation
+
+<PageTitle>Login - Just Short It</PageTitle>
+
+<section class="grid place-items-center h-full">
+    <EditForm id="login-form" FormName="login" class="text-primary-content w-full md:max-w-md"
+              method="post" Model="Model" OnValidSubmit="Submit">
+        <h1 class="text-2xl lg:text-4xl mb-6">Login</h1>
+        <MessageComponent Message="@Message" Type="MessageComponent.AlertType.Error" />
+
+        <div class="form-control w-full">
+            <span class="label">
+                <label class="label-text text-primary-content">Username</label>
+            </span>
+            <InputText class="input input-bordered w-full" @bind-Value="Model.Username"
+                       autocomplete="username" required/>
+            <span class="label">
+                <ValidationMessage class="label-text-alt text-error" For="() => Model.Username"/>
+            </span>
+        </div>
+        <div class="form-control w-full">
+            <span class="label">
+                <label class="label-text text-primary-content">Password</label>
+            </span>
+            <InputText class="input input-bordered w-full" @bind-Value="Model.Password"
+                       type="password" autocomplete="password" required/>
+            <span class="label">
+                <ValidationMessage class="label-text-alt text-error" For="() => Model.Password"/>
+            </span>
+        </div>
+
+        <button class="btn btn-primary w-full" type="submit">Login</button>
+    </EditForm>
+</section>
+
+@code {
+    [SupplyParameterFromForm]
+    public LoginModel Model { get; set; } = default!;
+
+    public string? Message { get; set; }
+
+    protected override void OnInitialized() {
+        // ReSharper disable once NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract
+        Model ??= new LoginModel();
+    }
+
+    public sealed class LoginModel {
+        [Required(AllowEmptyStrings = false, ErrorMessage = "User name is required.")]
+        public string? Username { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Password is required.")]
+        public string? Password { get; set; }
+    }
+
+    private async Task Submit() {
+        if (Model.Username is null || Model.Password is null) return;
+        var context = HttpContextAccessor.HttpContext;
+        if (context is null) throw new ArgumentNullException("context");
+
+        if (Authentication.IsUser(Model.Username, Model.Password)) {
+            var claims = new List<Claim> {
+                new(ClaimTypes.Name, Model.Username),
+                new(ClaimTypes.Role, "Administrator")
+            };
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+            var properties = new AuthenticationProperties{
+                AllowRefresh = true,
+                IsPersistent = true,
+                ExpiresUtc = DateTimeOffset.UtcNow.AddDays(1),
+                IssuedUtc = DateTimeOffset.UtcNow,
+                RedirectUri = "/"
+            };
+
+            await context.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(identity),
+                properties);
+
+            Navigation.NavigateTo("/urls", true);
+        } else {
+            Message = "Invalid user name or password.";
+        }
+    }
+}
