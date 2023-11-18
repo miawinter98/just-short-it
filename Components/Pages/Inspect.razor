@@ -1,0 +1,77 @@
+﻿@page "/inspect"
+@using Microsoft.AspNetCore.Authorization
+@using JustShortIt.Model
+@using Microsoft.Extensions.Caching.Distributed
+@attribute [Authorize]
+
+@inject IDistributedCache Db
+
+<PageTitle>Inspect - Just Short It</PageTitle>
+
+<div class="grid place-items-center h-full">
+    <section class="w-full md:max-w-lg flex flex-col gap-4">
+        @if (Model is null) {
+            <h1 class="text-3xl lg:text-5xl text-error text-center mb-6">
+                URL not found
+            </h1>
+            <h2 class="text-2xl lg:text-4xl text-secondary-content text-center mb-3">
+                The given ID does not exist, it may have expired or been deleted.
+            </h2>
+            <MessageComponent Message="@Message" Type="Type" />
+        } else {
+            <h1 class="text-3xl lg:text-5xl text-primary-content text-center mb-6">Inspect</h1>
+                
+            <dl class="grid grid-cols-2 gap-y-2 text-primary-content">
+                <dt>ID</dt>
+                <dd>@Model.Id</dd>
+                <dt>URL-Target</dt>
+                <dd>@Model.Target</dd>
+            </dl>
+
+            <form class="self-end" method="post" id="delete-form" 
+                  @formname="delete" @onsubmit="Submit_Delete">
+                <AntiforgeryToken />
+                <input type="hidden" asp-for="Id"/>
+                <button type="submit" class="btn btn-error min-h-0 h-8 text-base-content btn-wide">
+                    Delete
+                </button>
+            </form>
+        }
+
+        <a class="btn btn-primary btn-lg min-h-0 h-12 btn-wide self-center" href="/urls">
+            Back to URLs
+        </a>
+    </section>
+</div>
+
+@code {
+    [SupplyParameterFromQuery]
+    public string? Id { get; set; }
+
+    private string? Message { get; set; }
+    private MessageComponent.AlertType Type { get; set; }
+
+    private UrlRedirect? Model { get; set; }
+
+    protected override async Task OnInitializedAsync() {
+        if (Id is not null) {
+            string? url = await Db.GetStringAsync(Id);
+            if (url is not null)
+                Model = new UrlRedirect(Id, url, string.Empty);
+        }
+    }
+
+    private async Task Submit_Delete() {
+        if (Id is null) {
+            Message = $"Invalid Request: Deletion without Id";
+            return;
+        }
+
+        await Db.RemoveAsync(Id);
+
+        Type = MessageComponent.AlertType.Success;
+        Message = $"Id '{Id}' successfully deleted.";
+        return;
+    }
+
+}

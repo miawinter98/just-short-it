@@ -1,11 +1,10 @@
-using System.Text.Encodings.Web;
 using JustShortIt.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Text.RegularExpressions;
 using System.Web;
-using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Caching.Distributed;
 
 namespace JustShortIt.Pages; 
@@ -42,7 +41,7 @@ public class UrlsModel : PageModel {
             return Page();
         }
 
-        return RedirectToPage("Inspect", new { Id = id });
+        return LocalRedirect(QueryHelpers.AddQueryString("~/inspect", "Id", id));
     }
 
     public async Task<IActionResult> OnPostNewAsync() {
