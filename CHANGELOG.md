@@ -1,5 +1,16 @@
 # Changelog
 
+## [unreleased]
+
+### Added
+- new css style, created using tailwindcss and daisyui
+
+### Fixed
+- form submit bug on Urls page, that happens when one first tries to look up an ID unsuccessfully, and then tries to create a new redirect
+
+### Removed
+- bulma based css style
+
 ## [1.2.0] - 2023-11-17
 
 ### Added
