@@ -1,6 +1,6 @@
 ﻿@if (User.Identity?.IsAuthenticated is true) {
     <span class="mx-3">@User.Identity.Name</span>
-    <a class="button is-ghost" asp-page="Logout">Logout</a>
+    <a class="btn btn-link text-secondary-content" asp-page="Logout">Logout</a>
 } else {
-    <a class="button is-ghost" asp-page="Login">Login</a>
+    <a class="hover:link text-secondary-content" asp-page="Login">Login</a>
 }

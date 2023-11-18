@@ -45,7 +45,7 @@ public class UrlsModel : PageModel {
         return RedirectToPage("Inspect", new { Id = id });
     }
 
-    public async Task<IActionResult> OnPostAsync() {
+    public async Task<IActionResult> OnPostNewAsync() {
         if (!ModelState.IsValid) return Page();
         string id = HttpUtility.UrlEncode(Model.Id);
 
@@ -66,8 +66,8 @@ public class UrlsModel : PageModel {
         ModelState.Clear(); 
         ModelState.SetModelValue(nameof(UrlRedirect.Id), GenerateNewId(), GenerateNewId());
 
-        Message = $"URL Generated! <a href='{link}'>{link}</a>. " +
-                  $"<button class='button is-link is-small' onclick='navigator.clipboard.writeText(\"{link}\")'>Copy</button>";
+        Message = $"URL Generated! <a class=link href='{link}'>{link}</a>. " +
+                  $"<button class='btn btn-sm btn-success' onclick='navigator.clipboard.writeText(\"{link}\")'>Copy</button>";
         return OnGet(Message);
     }
     

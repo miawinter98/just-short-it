@@ -4,31 +4,31 @@
     ViewData["Title"] = "Login";
 }
 
-<div class="columns is-centered my-6 px-4">
-    <form class="column is-one-third-desktop is-half-tablet is-full-mobile" method="post">
-        <h1 class="title is-2">Login</h1>
+<div class="grid place-items-center h-full">
+    <form class="text-primary-content w-full md:max-w-md" method="post">
+        <h1 class="text-2xl lg:text-4xl mb-6">Login</h1>
 
-        <div class="field">
-            <label class="label" asp-for="UserModel!.Username">Username</label>
-            <div class="control">
-                <input required class="input" type="text" asp-for="UserModel!.Username" autocomplete="username" />
-            </div>
-            <span class="help is-danger" asp-validation-for="UserModel!.Username"></span>
+        <div class="form-control w-full">
+            <span class="label">
+                <label class="label-text text-primary-content" asp-for="UserModel!.Username">Username</label>
+            </span>
+            <input required class="input input-bordered w-full" type="text" asp-for="UserModel!.Username" autocomplete="username" />
+            <span class="label">
+                <span class="label-text-alt text-error" asp-validation-for="UserModel!.Username"></span>
+            </span>
         </div>
-        <div class="field">
-            <label class="label" asp-for="UserModel!.Password">Password</label>
-            <div class="control">
-                <input required class="input" type="password" asp-for="UserModel!.Password" autocomplete="current-password" />
-            </div>
-            <span class="help is-danger" asp-validation-for="UserModel!.Password"></span>
+        <div class="form-control w-full">
+            <span class="label">
+                <label class="label-text text-primary-content" asp-for="UserModel!.Password">Password</label>
+            </span>
+            <input required class="input input-bordered w-full" type="password" asp-for="UserModel!.Password" autocomplete="current-password" />
+            <span class="label">
+                <span class="label-text-alt text-error" asp-validation-for="UserModel!.Password"></span>
+            </span>
         </div>
 
-        <div class="has-text-danger" asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-        <div class="field is-grouped is-grouped-right">
-            <div class="control">
-                <button class="button is-primary" type="submit">Login</button>
-            </div>
-        </div>
+        <div class="text-error pb-3" asp-validation-summary="ModelOnly" class="text-danger"></div>
+        
+        <button class="btn btn-primary w-full" type="submit">Login</button>
     </form>
 </div>

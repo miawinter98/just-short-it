@@ -4,12 +4,12 @@
     ViewData["Title"] = "Startpage";
 }
 
-<div class="has-text-centered my-6 px-4">
+<div class="text-center flex flex-col items-center gap-4">
     @if (Model.Id is null) {
-        <h1 class="title is-1 is-spaced">Welcome to Just Short It!</h1>
-        <h2 class="subtitle is-2">The KISS single-user URL shortener!</h2>
-        <a class="button is-primary is-medium" asp-page="Urls">Start shorting URLs</a>
+        <h1 class="text-3xl lg:text-5xl font-bold text-primary-content">Welcome to Just Short It!</h1>
+        <h2 class="text-xl lg:text-3xl font-bold text-secondary-content">The KISS single-user URL shortener!</h2>
+        <a class="btn btn-primary btn-lg min-h-0 h-12" asp-page="Urls">Start shorting URLs</a>
     } else {
-        <p class="has-text-danger">@Model.ErrorMessage</p>
+        <p class="text-error">@Model.ErrorMessage</p>
     }
 </div>

@@ -5,35 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - JustShortIt</title>
     
-    <link rel="stylesheet" href="/css/index.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="/css/main.min.css" asp-append-version="true" />
 </head>
-<body>
-    <nav class="navbar is-primary has-shadow" aria-label="main navigation">
-        <div class="navbar-brand">
-            <a class="navbar-item" href="https://github.com/miawinter98/just-short-it" target="_blank">Just Short It!</a>
+<body class="flex flex-col min-h-screen">
+    <nav class="navbar bg-primary text-primary-content p-0 min-h-0" aria-label="main navigation">
+        <div class="flex-1">
+            <a class="btn btn-ghost rounded-none px-6" href="https://github.com/miawinter98/just-short-it" target="_blank">Just Short It!</a>
         </div>
-        <div class="navbar-menu">
-
-            <div class="navbar-end">
-                <div class="navbar-item">
-                    <partial name="_LoginPartial"/>
-                </div>
-            </div>
+        <div class="flex-none mr-6">
+            <partial name="_LoginPartial"/>
         </div>
     </nav>
 
-    <main style="margin-bottom: 12rem" class="container">
+    <main class="flex-1 container mx-auto px-8 py-8 grid">
         @RenderBody()
     </main>
 
-    <footer style="position: fixed; bottom: 0; left: 0; right: 0" class="footer has-background-primary ">
-        <div class="has-text-centered">
+    <footer class="footer footer-center py-10 bg-primary text-secondary-content">
+        <aside class="">
             <p>
-                <a href="https://github.com/miawinter98/just-short-it" target="_blank">Just Short it!</a> 
-                by <a href="https://miawinter.de/" target="_blank">Mia Winter</a>.
-                Styled with <a href="https://bulma.io" target="_blank">Bulma</a>.
+                <a class="hover:link" href="https://github.com/miawinter98/just-short-it" target="_blank">Just Short it!</a> 
+                by <a class="hover:link" href="https://miawinter.de/" target="_blank">Mia Winter</a>.
             </p>
-        </div>
+        </aside>
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
