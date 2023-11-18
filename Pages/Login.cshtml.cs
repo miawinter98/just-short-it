@@ -1,3 +1,4 @@
+
 using System.Security.Claims;
 using JustShortIt.Model;
 using Microsoft.AspNetCore.Authentication;
@@ -42,7 +43,7 @@ public class LoginModel : PageModel {
                 new ClaimsPrincipal(identity), 
                 properties);
 
-            return RedirectToPage("Urls");
+            return LocalRedirect("~/urls");
         }
 
         ModelState.AddModelError(string.Empty, "Invalid Username or Password");
