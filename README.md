@@ -30,6 +30,8 @@ services:
   just-short-it:
     container_name: JustShortIt
     image: miawinter/just-short-it:latest
+    ports:
+      - "80:8080"
     environment:
       - "JSI_BaseUrl=<your-url>"
       - "JSI_Account__Username=<your-username>"
