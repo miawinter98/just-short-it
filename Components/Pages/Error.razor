@@ -1,0 +1,27 @@
+﻿@page "/error"
+@using System.Diagnostics
+
+@inject IHttpContextAccessor HttpContextAccessor
+
+<PageTitle>Error</PageTitle>
+
+<section>
+    <h1 class="text-3xl lg:text-5xl text-error mb-6">Unexpected Error</h1>
+    <h2 class="text-xl lg:text-2xl text-secondary-content mb-3">
+        An error occurred while processing your request
+    </h2>
+
+    @if (ShowRequestId) {
+        <p>
+            <strong>Request ID:</strong> <code>@RequestId</code>
+        </p>
+    }
+</section>
+
+@code{
+    public string? RequestId { get; set; }
+    public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+
+    protected override void OnInitialized() =>
+        RequestId = Activity.Current?.Id ?? HttpContextAccessor.HttpContext?.TraceIdentifier;
+}

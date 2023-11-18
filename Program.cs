@@ -67,7 +67,7 @@ app.UseCookiePolicy(new CookiePolicyOptions {
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment()) {
-    app.UseExceptionHandler("/Error");
+    app.UseExceptionHandler("/error", createScopeForErrors: true);
 }
 
 
