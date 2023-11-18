@@ -1,0 +1,37 @@
+﻿@page "/"
+@page "/{Id}"
+@using Microsoft.Extensions.Caching.Distributed
+
+@inject IDistributedCache Db
+@inject NavigationManager Navigation
+
+<PageTitle>Startpage - Just Short It</PageTitle>
+
+<div class="text-center flex flex-col items-center gap-4">
+    @if (Id is null) {
+        <h1 class="text-3xl lg:text-5xl font-bold text-primary-content">Welcome to Just Short It!</h1>
+        <h2 class="text-xl lg:text-3xl font-bold text-secondary-content">The KISS single-user URL shortener!</h2>
+        <a class="btn btn-primary btn-lg min-h-0 h-12" href="/Urls">Start shorting URLs</a>
+    } else {
+        <p class="text-error" aria-role="alert">@ErrorMessage</p>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public string? Id { get; set; }
+
+    private string? ErrorMessage { get; set; }
+
+    protected override async Task OnInitializedAsync() {
+        if (Id is not null) {
+            string? data = await Db.GetStringAsync(Id);
+            if (data is not null) {
+                Navigation.NavigateTo(data, true);
+            } else {
+                ErrorMessage = "Redirect ID not found, it may have been deleted or expired";
+            }
+        }
+    }
+
+}
