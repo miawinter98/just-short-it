@@ -1,0 +1,195 @@
+﻿@page "/urls"
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.Extensions.Caching.Distributed
+@using System.ComponentModel.DataAnnotations
+@using System.Text.RegularExpressions
+@using System.Web
+@using Humanizer
+@using Microsoft.AspNetCore.WebUtilities
+@attribute [Authorize]
+
+@inject IDistributedCache Db
+@inject IConfiguration Configuration
+@inject NavigationManager Navigation
+
+<PageTitle>Urls - Just Short It</PageTitle>
+
+<div class="grid place-items-center h-full text-primary-content">
+    <section class="w-full md:max-w-lg">
+        <h1 class="text-3xl lg:text-5xl text-primary-content text-center mb-6">
+            Urls Administration
+        </h1>
+        <MessageComponent Message="@Message" Type="MessageType" LinkToCopy="@Link" />
+
+        <EditForm class="mb-6" method="post" id="inspect-form" 
+                  FormName="inspect" Model="Inspect" OnValidSubmit="Submit_Inspect">
+            <DataAnnotationsValidator />
+            <h2 class="text-xl lg:text-2xl mb-3">Inspect URL</h2>
+
+            <div class="join w-full">
+                <label class="join-item btn btn-outline no-animation text-primary-content border-white">
+                    ID
+                </label>
+                <div class="join-item flex-1">
+                    <InputText id="inspect_id" class="input input-bordered w-full border-white" 
+                               min="2" max="16" autocomplete="off"
+                               @bind-Value="Inspect.Id" required />
+                </div>
+                <div class="join-item">
+                    <button class="btn btn-primary border-1" type="submit">Inspect</button>
+                </div>
+            </div>
+            
+            <ValidationMessage For="() => Inspect"></ValidationMessage>
+        </EditForm>
+        
+        <EditForm method="post" id="new-form"
+                  FormName="new" Model="New" OnValidSubmit="Submit_New">
+            <DataAnnotationsValidator />
+            <h2 class="text-xl lg:text-2xl mb-3">New URL</h2>
+
+            <div class="form-control w-full">
+                <span class="label">
+                    <label class="label-text text-primary-content">ID</label>
+                </span>
+                <InputText id="new_id" class="input input-bordered w-full" 
+                           min="2" max="16" autocomplete="off"
+                           @bind-Value="New.Id" required />
+                <span class="label">
+                    <ValidationMessage class="label-text-alt text-error" For="() => New.Id" />
+                </span>
+            </div>
+
+            <div class="form-control w-full">
+                <div class="label">
+                    <label class="label-text text-primary-content">Target</label>
+                </div>
+                <InputText id="new_url" class="input input-bordered w-full" type="url" @bind-Value="New.Url" 
+                       autocomplete="off" required />
+                <span class="label">
+                    <ValidationMessage class="label-text-alt text-error" For="() => New.Url" />
+                </span>
+            </div>
+            
+            <div class="form-control w-full">
+                <div class="label">
+                    <label class="label-text text-primary-content">Expiration</label>
+                </div>
+                <InputSelect id="new_expiration" class="select select-bordered w-full" 
+                             @bind-Value="New.RedirectExpiration" DisplayName="Expiration" required>
+                    <option value="null" disabled selected>Select Expiration</option>
+                    @foreach (var expiration in Enum.GetValues<Expiration>()) {
+                        <option value="@expiration">@expiration.Humanize()</option>
+                    }
+                </InputSelect>
+                <span class="label">
+                    <ValidationMessage class="label-text-alt text-error" For="() => New.RedirectExpiration" />
+                </span>
+            </div>
+
+            <button class="btn btn-primary w-full" type="submit">Create</button>    
+        </EditForm>
+    </section>
+</div>
+
+@code {
+    [SupplyParameterFromForm(FormName = "inspect")]
+    public InspectModel Inspect { get; set; } = default!;
+    [SupplyParameterFromForm(FormName = "new")]
+    public NewModel New { get; set; } = default!;
+
+    private string BaseUrl { get; set; } = null!;
+    private string? Message { get; set; }
+    private string? Link { get; set; }
+    private MessageComponent.AlertType MessageType { get; set; }
+
+    protected override void OnInitialized() {
+        // ReSharper disable NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract
+        Inspect ??= new InspectModel();
+        New ??= new NewModel();
+        // ReSharper restore NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract
+        New.Id ??= GenerateNewId();
+
+        string url = Configuration.GetValue<string>("BaseUrl") ?? throw new ApplicationException("BaseUrl not set");
+        BaseUrl = new Uri(url, UriKind.Absolute).ToString();
+    }
+
+    private async Task Submit_Inspect(EditContext context) {
+        if (string.IsNullOrWhiteSpace(Inspect.Id)) return;
+
+        if (await Db.GetAsync(Inspect.Id) is null) {
+            Message = "ID does not exist";
+            MessageType = MessageComponent.AlertType.Error;
+            return;
+        }
+
+        Navigation.NavigateTo(QueryHelpers.AddQueryString("/inspect", "Id", Inspect.Id));
+    }
+
+    private async Task Submit_New() {
+        if (string.IsNullOrWhiteSpace(New.Id)) return;
+
+        string id = HttpUtility.UrlEncode(New.Id);
+
+        if (await Db.GetAsync(id) is not null) {
+            Message = "This ID is already taken, sorry!";
+            MessageType = MessageComponent.AlertType.Error;
+            return;
+        }
+
+        if (Uri.TryCreate($"{BaseUrl}{id}", UriKind.Absolute, out var link) is false) {
+            Message = "This ID cannot be used in a URL, sorry!";
+            MessageType = MessageComponent.AlertType.Error;
+            return;
+        }
+        
+        await Db.SetStringAsync(id, New.Url!, new DistributedCacheEntryOptions {
+            AbsoluteExpiration = DateTime.FromBinary(ToUnixTime(New.RedirectExpiration!.Value))
+        });
+
+        Message = $"URL Generated! {link}";
+        Link = link.ToString();
+        MessageType = MessageComponent.AlertType.Success;
+    }
+    
+    private static string GenerateNewId() {
+        string base64Guid = Regex.Replace(
+            Convert.ToBase64String(Guid.NewGuid().ToByteArray()), 
+            "[/+=]", "");
+        return base64Guid[..6];
+    }
+
+    #region Models
+
+    public sealed class InspectModel {
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Id is required.")]
+        [MinLength(2, ErrorMessage = "Id needs to be at least 2 characters long.")]
+        [MaxLength(16, ErrorMessage = "Id needs to be at maximum 16 characters long.")]
+        public string? Id { get; set; }
+    }
+    public sealed class NewModel {
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Id is required.")]
+        [MinLength(2, ErrorMessage = "Id needs to be at least 2 characters long.")]
+        [MaxLength(16, ErrorMessage = "Id needs to be at maximum 16 characters long.")]
+        public string? Id { get; set; } 
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Target is required.")]
+        [Url(ErrorMessage = "Target needs to be a valid URL.")]
+        public string? Url { get; set; }
+        [Required(ErrorMessage = "Expiration is required.")]
+        public Expiration? RedirectExpiration { get; set; }
+    }
+
+    public enum Expiration {
+        OneDay, OneWeek, FourWeeks, OneMonth, OneYear, Never
+    }
+
+    private static long ToUnixTime(Expiration expiration) => expiration switch{
+        Expiration.OneDay => DateTime.UtcNow.AddDays(1).ToBinary(),
+        Expiration.OneWeek => DateTime.UtcNow.AddDays(7).ToBinary(),
+        Expiration.FourWeeks => DateTime.UtcNow.AddDays(4*7).ToBinary(),
+        Expiration.OneYear => DateTime.UtcNow.AddYears(1).ToBinary(),
+        Expiration.Never => DateTime.UtcNow.AddYears(1000).ToBinary(),
+        _ => throw new ArgumentOutOfRangeException(nameof(expiration), expiration, null)};
+
+    #endregion
+}
