@@ -5,7 +5,7 @@
 The most KISS single user URL shortener there is.
 
 ![](https://img.shields.io/github/license/miawinter98/just-short-it?color=green)
-![](https://img.shields.io/github/forks/miawinter98/just-short-it?label=gitgub%20forks&logo=github)
+![](https://img.shields.io/github/forks/miawinter98/just-short-it?label=github%20forks&logo=github)
 ![](https://img.shields.io/github/stars/miawinter98/just-short-it?label=github%20stars&color=yellow&logo=github)
 
 ![](https://img.shields.io/docker/pulls/miawinter/just-short-it?color=informational&logo=docker)
