@@ -175,4 +175,4 @@ Just Short It uses [autoprefixer](https://github.com/postcss/autoprefixer/), lic
 Just Short It uses [cssnano](https://cssnano.co/), licensed under the [MIT License](https://github.com/cssnano/cssnano/blob/master/LICENSE-MIT)  
 Just Short It uses [heroicons](https://heroicons.com/), licensed under the [MIT License](https://github.com/tailwindlabs/heroicons/blob/master/LICENSE)
 
-Copyright (c) 2023 Mia Winter
+Copyright (c) 2024 Mia Winter
