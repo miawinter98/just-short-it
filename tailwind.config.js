@@ -3,6 +3,31 @@ module.exports = {
     content: ["Pages/**/*.cshtml", "Components/**/*.razor"],
     theme: {
         extend: {
+            screens: {
+                '3xl': "1792px",
+                '4xl': "2048px",
+                '5xl': "2304px",
+                '6xl': "2560px",
+                '8xl': "3072px"
+            },
+            container: {
+                'max-width': {
+                    '3xl': "1792px",
+                    '4xl': "2048px",
+                    '5xl': "2304px",
+                    '6xl': "2560px",
+                    '8xl': "3072px"
+                }
+            }
+        },
+        fontSize: {
+            sm: '0.750rem',
+            base: '1rem',
+            xl: '1.333rem',
+            '2xl': '1.777rem',
+            '3xl': '2.369rem',
+            '4xl': '3.158rem',
+            '5xl': '4.210rem'
         }
     },
     plugins: [require("daisyui")],
