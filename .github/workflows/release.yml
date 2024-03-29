@@ -1,0 +1,34 @@
+name: GitHub Release
+
+on:
+  push:
+    tags: [ v* ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pull-requests: read
+
+    name: Generate Release
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Generate Changelog
+        uses: pfandie/generate-changelog-action@v1.0.6
+        id: changelog
+        with:
+          config_path: .chglog
+          next_tag: ${{ github.ref_name }}
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1.14.0
+        with:
+          makeLatest: true
+          body: ${{ steps.changelog.outputs.changelog }}
+          name: "Release ${{ github.ref_name }}"
