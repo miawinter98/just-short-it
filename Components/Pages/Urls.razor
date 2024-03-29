@@ -153,6 +153,8 @@
         Message = $"URL Generated! {link}";
         Link = link.ToString();
         MessageType = MessageComponent.AlertType.Success;
+        New = new();
+        New.Id = GenerateNewId();
     }
     
     private string GenerateNewId() {
