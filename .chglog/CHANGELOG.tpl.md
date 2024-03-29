@@ -20,5 +20,5 @@
 {{ end -}}
 {{ end -}}
 
-### [Unreleased](https://github.com/miawinter98/Wave/compare/{{ .Tag.Name }}...HEAD)
+### [Unreleased](https://github.com/miawinter98/just-short-it/compare/{{ .Tag.Name }}...HEAD)
 {{ end -}}
