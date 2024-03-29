@@ -20,7 +20,8 @@
       "commandName": "Docker",
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
       "environmentVariables": {
-        "ASPNETCORE_HTTP_PORTS": "8080"
+        "ASPNETCORE_HTTP_PORTS": "8080",
+        "JSI_CUSTOMIZATION__GENERATEDIDLENGTH": "12"
       },
       "publishAllPorts": true
     }

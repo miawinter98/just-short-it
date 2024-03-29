@@ -5,9 +5,12 @@
 @using System.Text.RegularExpressions
 @using System.Web
 @using Humanizer
+@using JustShortIt.Model
 @using Microsoft.AspNetCore.WebUtilities
+@using Microsoft.Extensions.Options
 @attribute [Authorize]
 
+@inject IOptions<Customization> CustomizationOptions
 @inject IDistributedCache Db
 @inject IConfiguration Configuration
 @inject NavigationManager Navigation
@@ -152,11 +155,14 @@
         MessageType = MessageComponent.AlertType.Success;
     }
     
-    private static string GenerateNewId() {
+    private string GenerateNewId() {
         string base64Guid = Regex.Replace(
             Convert.ToBase64String(Guid.NewGuid().ToByteArray()), 
             "[/+=]", "");
-        return base64Guid[..6];
+
+        int length = Math.Min(Math.Max(CustomizationOptions.Value.GeneratedIdLength, 2), 16);
+
+        return base64Guid[..length];
     }
 
     #region Models

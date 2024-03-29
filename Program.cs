@@ -15,6 +15,7 @@ builder.Services.AddRazorComponents();
 var redisConnection = builder.Configuration.GetSection("Redis").Get<RedisConnection>();
 var user = builder.Configuration.GetSection("Account").Get<User>();
 string? baseUrl = builder.Configuration.GetValue<string>("BaseUrl");
+builder.Services.Configure<Customization>(builder.Configuration.GetSection(nameof(Customization)));
 
 #if DEBUG
 baseUrl = "http://localhost/";
