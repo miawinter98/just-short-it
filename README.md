@@ -4,18 +4,16 @@
 
 The most KISS single user URL shortener there is.
 
-![](https://img.shields.io/github/license/miawinter98/just-short-it?color=green)
-![](https://img.shields.io/github/forks/miawinter98/just-short-it?label=github%20forks&logo=github)
-![](https://img.shields.io/github/stars/miawinter98/just-short-it?label=github%20stars&color=yellow&logo=github)
+![](https://img.shields.io/github/license/miawinter98/just-short-it?color=green&style=for-the-badge)
+![](https://img.shields.io/github/forks/miawinter98/just-short-it?label=github%20forks&logo=github&style=for-the-badge)
+![](https://img.shields.io/github/stars/miawinter98/just-short-it?label=github%20stars&color=yellow&logo=github&style=for-the-badge)
 
-![](https://img.shields.io/docker/pulls/miawinter/just-short-it?color=informational&logo=docker)
-![](https://img.shields.io/docker/stars/miawinter/just-short-it?color=yellow&logo=docker)
-
-![](https://img.shields.io/docker/v/miawinter/just-short-it/latest?logo=docker&label=)
-![](https://img.shields.io/docker/v/miawinter/just-short-it/latest-alpine?logo=docker&label=)
+![](https://img.shields.io/docker/pulls/miawinter/just-short-it?color=informational&logo=docker&style=for-the-badge)
+![](https://img.shields.io/docker/v/miawinter/just-short-it/latest?logo=docker&label=latest&style=for-the-badge)
+![](https://img.shields.io/docker/v/miawinter/just-short-it/latest-alpine?logo=docker&label=latest%20alpine&style=for-the-badge)
 
 ## To simply run Just Short It in a container run:
-```
+```shell
 docker run -e JSI_BaseUrl=<your-url> \
            -e JSI_Account__Username=<your-username> \
            -e JSI_Account__Password=<your-password> \
@@ -25,7 +23,7 @@ docker run -e JSI_BaseUrl=<your-url> \
 
 
 ## In Docker Compose:
-```docker-compose
+```yaml
 version: '3.4'
 
 services:
@@ -50,7 +48,7 @@ and optional `JSI_Redis__InstanceName` (default is "JustShortIt").
 
 If you want to run both with compose, the most simple setup looks like this:
 
-```docker-compose
+```yaml
 version: '3.4'
 
 services:
@@ -90,7 +88,7 @@ there is no easier way to get a reverse proxy with automatic certificate renewal
 
 Here is an Example of how to use Just Short It! togehter with nginx-proxy:
 
-```docker-compose
+```yaml
 version: '3.4'
 
 services:
