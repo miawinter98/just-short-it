@@ -36,7 +36,7 @@ services:
       - "JSI_BaseUrl=<your-url>"
       - "JSI_Account__Username=<your-username>"
       - "JSI_Account__Password=<your-password>"
-      - "JSI_CUSTOMIZATION__GENERATEDIDLENGTH=6" // optional, range 2 to 16, default: 6
+      - "JSI_CUSTOMIZATION__GENERATEDIDLENGTH=6" # optional, range 2 to 16, default: 6
 ```
 
 ## Redis
