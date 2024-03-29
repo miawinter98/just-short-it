@@ -1,9 +1,9 @@
 ﻿<AuthorizeView>
     <Authorized>
         <span class="mx-3">@(context.User.Identity?.Name ?? "err_username_unknown")</span>
-        <a data-enhance="false" class="btn btn-link text-secondary-content" href="/Logout">Logout</a>
+        <a data-enhance-nav="false" class="btn btn-link text-secondary-content" href="/Logout">Logout</a>
     </Authorized>
     <NotAuthorized>
-        <a data-enhance="false" class="hover:link text-secondary-content" href="/Login">Login</a>
+        <a data-enhance-nav="false" class="hover:link text-secondary-content" href="/Login">Login</a>
     </NotAuthorized>
 </AuthorizeView>
