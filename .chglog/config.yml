@@ -1,0 +1,41 @@
+style: "github"
+template: CHANGELOG.tpl.md
+info:
+  title: CHANGELOG
+  repository_url: https://github.com/miawinter98/Wave
+options:
+  tag_filter_pattern: '^v'
+  issues: 
+    prefix:
+      - '#'
+  commits:
+    filters:
+      Type:
+        - Added
+        - Changed
+        - fixed
+        - Implemented
+        - Improved
+        - Removed
+  commit_groups:
+    sort_by: Custom
+    title_order:
+      - Added
+      - Implemented
+      - Improved
+      - Changed
+      - Removed
+      - fixed
+    # title_maps:
+    #   feat: Features
+    #   fix: Bug Fixes
+    #   perf: Performance Improvements
+    #   refactor: Code Refactoring
+  header:
+    pattern: "^((\\w+)\\s.*)$"
+    pattern_maps:
+      - Subject
+      - Type
+  notes:
+    keywords:
+      - BREAKING CHANGE
