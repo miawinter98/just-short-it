@@ -136,3 +136,6 @@
 #*.props     merge=binary
 #*.filters   merge=binary
 #*.vcxitems  merge=binary
+
+*.cshtml	linguistic-language=csharp
+*.razor		linguistic-language=csharp
