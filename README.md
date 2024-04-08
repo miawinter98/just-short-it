@@ -17,7 +17,7 @@ The most KISS single user URL shortener there is.
 docker run -e JSI_BaseUrl=<your-url> \
            -e JSI_Account__Username=<your-username> \
            -e JSI_Account__Password=<your-password> \
-           -p 80:8080
+           -p 80:8080 \
            miawinter/just-short-it:latest
 ```
 
