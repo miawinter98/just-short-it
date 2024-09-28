@@ -17,15 +17,13 @@ The most KISS single user URL shortener there is.
 docker run -e JSI_BaseUrl=<your-url> \
            -e JSI_Account__Username=<your-username> \
            -e JSI_Account__Password=<your-password> \
-           -p 80:8080
+           -p 80:8080 \
            miawinter/just-short-it:latest
 ```
 
 
 ## In Docker Compose:
 ```yaml
-version: '3.4'
-
 services:
   just-short-it:
     container_name: JustShortIt
@@ -50,8 +48,6 @@ and optional `JSI_Redis__InstanceName` (default is "JustShortIt").
 If you want to run both with compose, the most simple setup looks like this:
 
 ```yaml
-version: '3.4'
-
 services:
   just-short-it:
     container_name: JustShortIt
@@ -82,16 +78,77 @@ There you go, now your urls survive a restart!
 # Https
 
 Just Short It! is not supporting Https, I reconmend using a reverse Proxy for hosting
-that handles SSL. I can highly reconmend jwilders 
-[nginx-proxy](https://github.com/nginx-proxy/nginx-proxy) togehter with 
-[acme-companion](https://github.com/nginx-proxy/acme-companion), 
-there is no easier way to get a reverse proxy with automatic certificate renewal.
+that handles SSL. I personally have experience with two types of reverse proxies here: caddy 
+and nginx-proxy.
+
+## Caddy
+
+The easiest way to get https with a reverse proxy is [Caddy](https://hub.docker.com/_/caddy).
+
+```yaml
+services:
+  # Just Short It 
+  just-short-it:
+    container_name: JustShortIt
+    image: miawinter/just-short-it:latest
+    environment:
+      - "JSI_BaseUrl=<your-url>"
+      - "JSI_Account__Username=<your-username>"
+      - "JSI_Account__Password=<your-password>"
+      - "JSI_Redis__ConnectionString=redis,password=<your-redis-password>"
+    depends_on:
+      - redis
+  redis:
+    container_name: Redis
+    image: redis:alpine
+    environment:
+      - "REDIS_PASSWORD=<your-redis-password>"
+    volumes:
+      - redis:/data
+  caddy:
+    container_name: Caddy
+    image: caddy:latest
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - caddy_sites: /sites
+      - caddy_data: /data
+      - caddy_config:/config
+      - ./Caddyfile:/etc/caddy/Caddyfile
+
+volumes:
+  redis:
+  caddy_sites:
+  caddy_data:
+  caddy_config:
+```
+
+Then you need a `Caddyfile`:
+
+```
+<your_domain> {
+  tls <your-email>
+  reverse_proxy JustShortIt:8080
+}
+```
+
+The tls property is the email used for let's encrypt, there you would be notified if a 
+certificate is about to expire (which won't happen as long as caddy is running, because 
+it automatically requests new ones before they do).  
+The domain should only be [subdomain?].[domain].[tls], if you prefix it with http or https
+caddy will only support that, but without this caddy responds to both and will automatically 
+redirect from http to https, as well as take care of the https certificates.
+
+## nginx-prodxy
+
+jwilders [nginx-proxy](https://github.com/nginx-proxy/nginx-proxy) togehter with 
+[acme-companion](https://github.com/nginx-proxy/acme-companion).
 
 Here is an Example of how to use Just Short It! togehter with nginx-proxy:
 
 ```yaml
-version: '3.4'
-
 services:
   # Just Short It
   just-short-it:
@@ -159,7 +216,6 @@ volumes:
   conf:
   vhost:
   html:
-
 ```
 
 # License and Attribution
