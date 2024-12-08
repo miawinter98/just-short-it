@@ -141,7 +141,7 @@ The domain should only be [subdomain?].[domain].[tls], if you prefix it with htt
 caddy will only support that, but without this caddy responds to both and will automatically 
 redirect from http to https, as well as take care of the https certificates.
 
-## nginx-prodxy
+## nginx-proxy
 
 jwilders [nginx-proxy](https://github.com/nginx-proxy/nginx-proxy) togehter with 
 [acme-companion](https://github.com/nginx-proxy/acme-companion).
